@@ -1,0 +1,37 @@
+{
+  "name": "socketio-setup",
+  "version": "0.0.1",
+  "description": "Testing Socket.io and AWS authentication",
+  "scripts": {
+    "build": "tsc --outDir build",
+    "start": "node index.js",
+    "build-and-test": "tsc --outDir build && node build/index.js",
+    "startbuild": "node build/index.js",
+    "dev": "concurrently --kill-others \"tsc --watch\" \"nodemon ./tmp/index.js \"",
+    "run": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "jwong-ai",
+  "license": "ISC",
+  "private": true,
+  "dependencies": {
+    "@socket.io/redis-adapter": "^8.2.1",
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.3.1",
+    "aws-jwt-verify": "^4.0.0",
+    "aws-sdk": "^2.1545.0",
+    "bluebird": "^3.7.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.21.1",
+    "fs-temp": "^2.0.1",
+    "socket.io": "^4.7.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.3"
+  }
+}
