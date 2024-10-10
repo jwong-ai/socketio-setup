@@ -1,17 +1,14 @@
 // Load the environment variables before importing any other modules
-import {additionalEventHandlers} from "./src/events/handlers";
-
 require('dotenv').config({
 	debug: false,
 });
-import {createAWSPinpointClient} from './src/services/clients';
+
+import {additionalEventHandlers} from "./src/events/handlers";
+
 import {Socket, Server} from 'socket.io';
-import {verifyIdToken} from './src/services/authentication';
 import express from 'express';
 import http from 'http';
 
-
-const awsPinpointClient = createAWSPinpointClient();
 
 const port = process.env.PORT ?? 3000;
 
@@ -30,28 +27,26 @@ const io = new Server(server, {
 // Handle Socket.io connection
 io.on('connection', async (socket: Socket) => {
 	try {
-		// Retrieve token passed in the connection event request
-		let token = socket.handshake.auth.token;
-		let decodedIdToken = await verifyIdToken(token);
+		console.log(`CONNECTED: socket<${socket.id}>`);
 
-		// If the token is invalid, immediately disconnect the socket
-		if (!decodedIdToken) {
-			socket.disconnect();
-			return;
-		}
-
-		// TODO: Parse any additional info that has been encoded in the token
-
-		console.log('NEW SOCKET: ' + socket.id);
-
-		// Only register the handlers if this is a valid socket connection
-
+		// NOTE: We can move these default Socket.IO event handlers to a separate file
 		socket.on('disconnect', async () => {
-			console.log('DISCONNECTED: ' + socket.id);
+			console.log(`DISCONNECTED: socket<${socket.id}>`);
 		});
 
-		additionalEventHandlers(io, socket, awsPinpointClient);
+		socket.on('error', (error: any) => {
+			console.error(`ERROR: socket<${socket.id}>`);
+			console.error(error);
+		});
 
+		// Create a socket event to relay the message back to the client
+		socket.on('echo', (data: any) => {
+			console.log(`ECHO: socket<${socket.id}>`);
+			socket.emit('echo', data);
+		});
+
+		// Register additional event handlers here to prevent a long list of handlers in this file
+		additionalEventHandlers(io, socket);
 
 	} catch (error) {
 		console.error('Connection error!');

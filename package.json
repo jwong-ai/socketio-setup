@@ -4,9 +4,8 @@
   "description": "Testing Socket.io and AWS authentication",
   "scripts": {
     "build": "tsc --outDir build",
-    "start": "node index.js",
     "build-and-test": "tsc --outDir build && node build/index.js",
-    "startbuild": "node build/index.js",
+    "start": "node build/index.js",
     "dev": "concurrently --kill-others \"tsc --watch\" \"nodemon ./tmp/index.js \"",
     "run": "nodemon index.js"
   },
