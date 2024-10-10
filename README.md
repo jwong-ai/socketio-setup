@@ -1,19 +1,17 @@
 # Socket.IO Sever
 
 ```bash
-# Build app for production use
+# Build app to the build directory in JS (so that we can run it because TS doesn't run in Node)
 npm run build
-
-# Locally run the built app
-npm run startbuild
-# Please note that the start command is different because we only want to upload the build directory
 
 # Run app for development with auto-reloading enabled
 npm run dev
 
-# The production command that runs node index.js from inside the build folder
+# Run the app from the build folder
 npm start
 ```
+
+![img.png](./_README-images/img.png)
 
 ### TODO:
 
